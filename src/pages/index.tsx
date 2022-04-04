@@ -1,3 +1,5 @@
+import IndexTemplate from "@/components/page-templates/index/IndexTemplate";
+
 export default function Page() {
-  return <div>hello world</div>;
+  return <IndexTemplate />;
 }
