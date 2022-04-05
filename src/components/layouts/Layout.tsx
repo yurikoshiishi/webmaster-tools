@@ -4,15 +4,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Header from "@/components/layouts/Header";
 import Sidebar, { SidebarProps } from "@/components/layouts/Sidebar";
 import Loading from "@/components/ui/Loading";
+import { japaneseWordWrapModule } from "@/modules/japanese-wordwrap/constants";
 
 const sidebarWidth = 240;
 const headerTitle = "Webmaster Tools";
-const links: SidebarProps["links"] = [
-  {
-    href: "/",
-    name: "Japanese Analyzer",
-  },
-];
+const links: SidebarProps["links"] = [japaneseWordWrapModule];
 
 interface LayoutProps {
   title?: string;
