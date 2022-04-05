@@ -1,3 +1,4 @@
+import { useNotification } from "@/hooks/useNotification";
 import { copyToClipboard } from "@/lib/clipboard";
 import { log } from "@/lib/logger";
 import { JapaneseWordwrapService } from "@/modules/japanese-wordwrap/services";
@@ -22,6 +23,7 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
 }) => {
   const [originalText, setOriginalText] = useState<string>("");
   const [seperatedText, setSeperatedText] = useState<string>("");
+  const { showNotification } = useNotification();
 
   const onChangeOriginal = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOriginalText(e.target.value);
@@ -38,6 +40,9 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
 
     try {
       copyToClipboard(seperatedText);
+      showNotification("Copied to clipboard!", {
+        variant: "default",
+      });
     } catch (error) {
       log(error);
     }

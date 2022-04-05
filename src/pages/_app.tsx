@@ -9,6 +9,7 @@ import { theme } from "../theme/theme";
 import { createEmotionCache } from "../theme/cache";
 import { EmotionCache } from "@emotion/cache";
 import BaseStyle from "@/theme/BaseStyle";
+import { SnackbarProvider } from "notistack";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -24,9 +25,18 @@ export default function MyApp(
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <BaseStyle />
-        <Component {...pageProps} />
+        <SnackbarProvider
+          autoHideDuration={3000}
+          maxSnack={1}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <CssBaseline />
+          <BaseStyle />
+          <Component {...pageProps} />
+        </SnackbarProvider>
       </ThemeProvider>
     </CacheProvider>
   );
