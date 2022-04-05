@@ -66,6 +66,7 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
           <FormLabel>Original</FormLabel>
           <Textarea
             {...textareaProps}
+            placeholder={`ここに文章を入力してください\nPlease enter the text you would like to convert`}
             value={originalText}
             onChange={onChangeOriginal}
           />
@@ -75,6 +76,7 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
           <FormLabel>Converted</FormLabel>
           <Textarea
             {...textareaProps}
+            placeholder={`ここ#に#文章#を#入力#し#て#ください\nPlease# #enter# #the# #text# #you# #would# #like# #to# #convert#`}
             value={seperatedText}
             onChange={onChangeSeperated}
           />
