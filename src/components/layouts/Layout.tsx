@@ -6,36 +6,42 @@ import { useRouter } from "next/router";
 import { Flex, useDisclosure } from "@chakra-ui/react";
 import Main from "@/components/layouts/Main";
 import Header from "@/components/layouts/Header";
+import Head, { HeadProps } from "@/components/layouts/Head";
+import { SITE_NAME } from "@/constants";
 
-const headerTitle = "Webmaster Tools";
 const links: SidebarProps["links"] = featureModules;
 
 interface LayoutProps {
   title?: string;
+  headProps?: HeadProps;
   isLoading?: boolean;
 }
 
 const Layout: React.FC<LayoutProps> = ({
-  title = headerTitle,
+  title = SITE_NAME,
   children,
   isLoading,
+  headProps,
 }) => {
   const { pathname } = useRouter();
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
-    <div>
-      <Header title={title} onClickOpenSidebar={onOpen} />
-      <Flex>
-        <Sidebar
-          links={links}
-          currentPathname={pathname}
-          onClickCloseSidebar={onClose}
-          isSidebarOpen={isOpen}
-        />
-        <Main>{isLoading ? <Loading /> : children}</Main>
-      </Flex>
-    </div>
+    <>
+      <Head {...headProps} />
+      <div>
+        <Header title={title} onClickOpenSidebar={onOpen} />
+        <Flex>
+          <Sidebar
+            links={links}
+            currentPathname={pathname}
+            onClickCloseSidebar={onClose}
+            isSidebarOpen={isOpen}
+          />
+          <Main>{isLoading ? <Loading /> : children}</Main>
+        </Flex>
+      </div>
+    </>
   );
 };
 
