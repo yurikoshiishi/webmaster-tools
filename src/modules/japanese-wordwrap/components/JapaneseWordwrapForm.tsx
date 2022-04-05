@@ -2,20 +2,24 @@ import { useNotification } from "@/hooks/useNotification";
 import { copyToClipboard } from "@/lib/clipboard";
 import { log } from "@/lib/logger";
 import { JapaneseWordwrapService } from "@/modules/japanese-wordwrap/services";
-import { ArrowRightAltOutlined } from "@mui/icons-material";
-import { Button, TextField, TextFieldProps } from "@mui/material";
-import { Box } from "@mui/system";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Textarea,
+  TextareaProps,
+} from "@chakra-ui/react";
 import React, { useState, VFC } from "react";
 
 interface JapaneseWordwrapFormFormProps {
   service: JapaneseWordwrapService;
 }
 
-const textFieldOptions: TextFieldProps = {
-  variant: "outlined",
-  fullWidth: true,
-  multiline: true,
-  rows: 5,
+const textareaProps: TextareaProps = {
+  rows: 8,
+  resize: "none",
 };
 
 const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
@@ -25,11 +29,11 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
   const [seperatedText, setSeperatedText] = useState<string>("");
   const { showNotification } = useNotification();
 
-  const onChangeOriginal = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeOriginal = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setOriginalText(e.target.value);
   };
 
-  const onChangeSeperated = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeSeperated = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setSeperatedText(e.target.value);
   };
 
@@ -40,8 +44,10 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
 
     try {
       copyToClipboard(seperatedText);
-      showNotification("Copied to clipboard!", {
-        variant: "default",
+      showNotification({
+        id: "japanesw-wordwrap-copy",
+        title: "Copied to clipboard!",
+        status: "success",
       });
     } catch (error) {
       log(error);
@@ -56,22 +62,26 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
         alignItems={"center"}
         justifyContent={"space-between"}
       >
-        <TextField
-          {...textFieldOptions}
-          label="original"
-          value={originalText}
-          onChange={onChangeOriginal}
-        />
-        <ArrowRightAltOutlined />
-        <TextField
-          label="converted"
-          {...textFieldOptions}
-          value={seperatedText}
-          onChange={onChangeSeperated}
-        />
+        <FormControl>
+          <FormLabel>Original</FormLabel>
+          <Textarea
+            {...textareaProps}
+            value={originalText}
+            onChange={onChangeOriginal}
+          />
+        </FormControl>
+        <ArrowForwardIcon />
+        <FormControl>
+          <FormLabel>Converted</FormLabel>
+          <Textarea
+            {...textareaProps}
+            value={seperatedText}
+            onChange={onChangeSeperated}
+          />
+        </FormControl>
       </Box>
-      <Box mt={2}>
-        <Button type="submit" variant="contained">
+      <Box mt={4}>
+        <Button type="submit" variant="solid">
           Convert
         </Button>
       </Box>

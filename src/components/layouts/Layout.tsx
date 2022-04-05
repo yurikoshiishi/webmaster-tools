@@ -1,12 +1,12 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Header from "@/components/layouts/Header";
 import Sidebar, { SidebarProps } from "@/components/layouts/Sidebar";
 import Loading from "@/components/ui/Loading";
 import { featureModules } from "@/modules";
+import { useRouter } from "next/router";
+import { Flex, useDisclosure } from "@chakra-ui/react";
+import Main from "@/components/layouts/Main";
+import Header from "@/components/layouts/Header";
 
-const sidebarWidth = 240;
 const headerTitle = "Webmaster Tools";
 const links: SidebarProps["links"] = featureModules;
 
@@ -20,21 +20,22 @@ const Layout: React.FC<LayoutProps> = ({
   children,
   isLoading,
 }) => {
+  const { pathname } = useRouter();
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
   return (
-    <Box height="100%" sx={{ display: "flex" }}>
-      <Header title={title} />
-      <Sidebar width={sidebarWidth} links={links} />
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <>
-            <Toolbar />
-            {children}
-          </>
-        )}
-      </Box>
-    </Box>
+    <div>
+      <Header title={title} onClickOpenSidebar={onOpen} />
+      <Flex>
+        <Sidebar
+          links={links}
+          currentPathname={pathname}
+          onClickCloseSidebar={onClose}
+          isSidebarOpen={isOpen}
+        />
+        <Main>{isLoading ? <Loading /> : children}</Main>
+      </Flex>
+    </div>
   );
 };
 

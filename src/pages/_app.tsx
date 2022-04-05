@@ -1,43 +1,12 @@
-import type { AppProps } from "next/app";
+import { ChakraProvider } from "@chakra-ui/react";
+import { AppProps } from "next/app";
 
-import * as React from "react";
-import Head from "next/head";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import { CacheProvider } from "@emotion/react";
-import { theme } from "../theme/theme";
-import { createEmotionCache } from "../theme/cache";
-import { EmotionCache } from "@emotion/cache";
-import BaseStyle from "@/theme/BaseStyle";
-import { SnackbarProvider } from "notistack";
-
-// Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache();
-
-export default function MyApp(
-  props: AppProps & { emotionCache: EmotionCache }
-) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <CacheProvider value={emotionCache}>
-      <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-      <ThemeProvider theme={theme}>
-        <SnackbarProvider
-          autoHideDuration={3000}
-          maxSnack={1}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-        >
-          <CssBaseline />
-          <BaseStyle />
-          <Component {...pageProps} />
-        </SnackbarProvider>
-      </ThemeProvider>
-    </CacheProvider>
+    <ChakraProvider>
+      <Component {...pageProps} />
+    </ChakraProvider>
   );
 }
+
+export default MyApp;

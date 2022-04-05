@@ -1,35 +1,90 @@
-import { Drawer, Toolbar, Box, List, Button } from "@mui/material";
+import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "@/components/layouts/constants";
+import {
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerOverlay,
+  Flex,
+  HStack,
+} from "@chakra-ui/react";
+import Link from "next/link";
 import React, { VFC } from "react";
 
 export interface SidebarProps {
-  width: number;
-  links: { name: string; href: string }[];
+  links: {
+    href: string;
+    name: string;
+  }[];
+  currentPathname: string;
+  isSidebarOpen: boolean;
+  onClickCloseSidebar: () => void;
 }
 
-const Sidebar: VFC<SidebarProps> = ({ width, links }) => {
+const Sidebar: VFC<SidebarProps> = ({
+  currentPathname,
+  links,
+  isSidebarOpen,
+  onClickCloseSidebar,
+}) => {
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width,
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: {
-          width,
-          boxSizing: "border-box",
-        },
-      }}
-    >
-      <Toolbar />
-      <Box sx={{ overflow: "auto", py: 1, px: 2 }}>
-        <List>
-          {links.map((link, i) => (
-            <Button key={i} variant="text" component="a" href={link.href}>
-              {link.name}
-            </Button>
-          ))}
-        </List>
+    <Box as={"nav"}>
+      <Box display={{ base: "none", lg: "block" }}>
+        <Flex
+          position="sticky"
+          width={`${SIDEBAR_WIDTH}px`}
+          top={`${HEADER_HEIGHT}px`}
+          left={0}
+          justifyContent="space-between"
+          height={`calc(100vh - ${HEADER_HEIGHT}px)`}
+        >
+          <HStack width={"100%"} p={4} spacing={4} align="flex-start">
+            {links.map((item) => (
+              <Link key={item.href} href={item.href} passHref>
+                <Button
+                  isFullWidth
+                  isActive={currentPathname === item.href}
+                  variant={"ghost"}
+                  as="a"
+                >
+                  {item.name}
+                </Button>
+              </Link>
+            ))}
+          </HStack>
+          <Divider orientation="vertical" />
+        </Flex>
       </Box>
-    </Drawer>
+      <Box display={{ lg: "none" }}>
+        <Drawer
+          placement="left"
+          onClose={onClickCloseSidebar}
+          isOpen={isSidebarOpen}
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerBody>
+              <HStack py={4} spacing={2}>
+                {links.map((item) => (
+                  <Link key={item.href} href={item.href} passHref>
+                    <Button
+                      isFullWidth
+                      isActive={currentPathname === item.href}
+                      variant={"ghost"}
+                      as="a"
+                    >
+                      {item.name}
+                    </Button>
+                  </Link>
+                ))}
+              </HStack>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+      </Box>
+    </Box>
   );
 };
 

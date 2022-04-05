@@ -1,16 +1,27 @@
-import { OptionsObject, useSnackbar } from "notistack";
+import { useToast, UseToastOptions } from "@chakra-ui/react";
 
 export interface UseNotification {
-  showNotification: (message: string, options?: NotificationOptions) => void;
+  showNotification: (options?: NotificationOptions) => void;
 }
 
-type NotificationOptions = Pick<OptionsObject, "variant">;
+type NotificationOptions = Pick<
+  UseToastOptions,
+  "title" | "description" | "status" | "id"
+>;
 
 export function useNotification(): UseNotification {
-  const { enqueueSnackbar } = useSnackbar();
+  const toast = useToast();
 
-  const showNotification = (message: string, options?: NotificationOptions) => {
-    enqueueSnackbar(message, options);
+  const showNotification = (options?: NotificationOptions) => {
+    if (options?.id && toast.isActive(options.id)) {
+      return;
+    }
+    toast({
+      ...options,
+      variant: "solid",
+      position: "top-right",
+      isClosable: true,
+    });
   };
 
   return {

@@ -1,6 +1,6 @@
 import Layout from "@/components/layouts/Layout";
 import { useIndexTemplate } from "@/components/page-templates/index/useIndexTemplate";
-import JapaneseWordwrapForm from "@/modules/japanese-wordwrap/components/JapaneseWordwrapForm";
+import JapaneseAnalyzerForm from "@/modules/japanese-wordwrap/components/JapaneseWordwrapForm";
 import React, { VFC } from "react";
 
 interface IndexTemplateProps {}
@@ -10,7 +10,7 @@ const IndexTemplate: VFC<IndexTemplateProps> = ({}) => {
 
   return (
     <Layout isLoading={isLoading}>
-      {service && <JapaneseWordwrapForm service={service} />}
+      {service && <JapaneseAnalyzerForm service={service} />}
     </Layout>
   );
 };

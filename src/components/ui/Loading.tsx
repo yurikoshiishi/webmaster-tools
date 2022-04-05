@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@chakra-ui/react";
 import React, { VFC } from "react";
 
 interface LoadingProps {}
