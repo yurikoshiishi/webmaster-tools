@@ -17,4 +17,13 @@ export const theme = createTheme({
   typography: {
     fontFamily: `'ui-sans-serif','system-ui','-apple-system','BlinkMacSystemFont','Helvetica Neue','Arial','Hiragino Kaku Gothic ProN','Hiragino Sans','Meiryo','sans-serif'`,
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        text: {
+          textTransform: "none",
+        },
+      },
+    },
+  },
 });
