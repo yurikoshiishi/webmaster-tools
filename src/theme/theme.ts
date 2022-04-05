@@ -14,4 +14,7 @@ export const theme = createTheme({
       main: red.A400,
     },
   },
+  typography: {
+    fontFamily: `'ui-sans-serif','system-ui','-apple-system','BlinkMacSystemFont','Helvetica Neue','Arial','Hiragino Kaku Gothic ProN','Hiragino Sans','Meiryo','sans-serif'`,
+  },
 });
