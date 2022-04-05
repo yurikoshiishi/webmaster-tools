@@ -1,4 +1,4 @@
-import { FeatureModule } from "@/modules/types";
+import { FeatureModule } from "@/modules";
 
 export const japaneseWordWrapModule: FeatureModule = {
   href: "/",
