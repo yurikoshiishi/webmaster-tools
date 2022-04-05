@@ -9,7 +9,7 @@ interface JapaneseAnalyzerFormProps {
 }
 
 const textFieldOptions: TextFieldProps = {
-  variant: "filled",
+  variant: "outlined",
   fullWidth: true,
   multiline: true,
   rows: 5,
