@@ -23,6 +23,10 @@ const JapaneseAnalyzerForm: VFC<JapaneseAnalyzerFormProps> = ({ service }) => {
     setOriginalText(e.target.value);
   };
 
+  const onChangeSeperated = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSeperatedText(e.target.value);
+  };
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const seperatedText = service.applySeperator(originalText);
@@ -48,6 +52,7 @@ const JapaneseAnalyzerForm: VFC<JapaneseAnalyzerFormProps> = ({ service }) => {
           label="converted"
           {...textFieldOptions}
           value={seperatedText}
+          onChange={onChangeSeperated}
         />
       </Box>
       <Box mt={2}>
