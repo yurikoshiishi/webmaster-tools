@@ -1,3 +1,5 @@
+import { copyToClipboard } from "@/lib/clipboard";
+import { log } from "@/lib/logger";
 import { JapaneseWordwrapService } from "@/modules/japanese-wordwrap/services";
 import { ArrowRightAltOutlined } from "@mui/icons-material";
 import { Button, TextField, TextFieldProps } from "@mui/material";
@@ -29,10 +31,16 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
     setSeperatedText(e.target.value);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const seperatedText = service.applySeperator(originalText);
     setSeperatedText(seperatedText);
+
+    try {
+      copyToClipboard(seperatedText);
+    } catch (error) {
+      log(error);
+    }
   };
 
   return (
