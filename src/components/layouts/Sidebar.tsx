@@ -1,7 +1,7 @@
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "@/components/layouts/constants";
+import SidebarLink from "@/components/layouts/SidebarLink";
 import {
   Box,
-  Button,
   Divider,
   Drawer,
   DrawerBody,
@@ -10,7 +10,6 @@ import {
   Flex,
   HStack,
 } from "@chakra-ui/react";
-import Link from "next/link";
 import React, { VFC } from "react";
 
 export interface SidebarProps {
@@ -42,16 +41,11 @@ const Sidebar: VFC<SidebarProps> = ({
         >
           <HStack width={"100%"} p={4} spacing={4} align="flex-start">
             {links.map((item) => (
-              <Link key={item.href} href={item.href} passHref>
-                <Button
-                  isFullWidth
-                  isActive={currentPathname === item.href}
-                  variant={"ghost"}
-                  as="a"
-                >
-                  {item.name}
-                </Button>
-              </Link>
+              <SidebarLink
+                key={item.href}
+                currentPathname={currentPathname}
+                {...item}
+              />
             ))}
           </HStack>
           <Divider orientation="vertical" />
@@ -68,16 +62,11 @@ const Sidebar: VFC<SidebarProps> = ({
             <DrawerBody>
               <HStack py={4} spacing={2}>
                 {links.map((item) => (
-                  <Link key={item.href} href={item.href} passHref>
-                    <Button
-                      isFullWidth
-                      isActive={currentPathname === item.href}
-                      variant={"ghost"}
-                      as="a"
-                    >
-                      {item.name}
-                    </Button>
-                  </Link>
+                  <SidebarLink
+                    key={item.href}
+                    currentPathname={currentPathname}
+                    {...item}
+                  />
                 ))}
               </HStack>
             </DrawerBody>
