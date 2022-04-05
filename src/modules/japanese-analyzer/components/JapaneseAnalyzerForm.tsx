@@ -52,7 +52,7 @@ const JapaneseAnalyzerForm: VFC<JapaneseAnalyzerFormProps> = ({ service }) => {
       </Box>
       <Box mt={2}>
         <Button type="submit" variant="contained">
-          変換する
+          Convert
         </Button>
       </Box>
     </form>
