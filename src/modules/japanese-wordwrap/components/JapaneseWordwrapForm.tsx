@@ -1,11 +1,11 @@
-import { JapaneseAnalyzerService } from "@/modules/japanese-analyzer/services";
+import { JapaneseWordwrapService } from "@/modules/japanese-wordwrap/services";
 import { ArrowRightAltOutlined } from "@mui/icons-material";
 import { Button, TextField, TextFieldProps } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState, VFC } from "react";
 
-interface JapaneseAnalyzerFormProps {
-  service: JapaneseAnalyzerService;
+interface JapaneseWordwrapFormFormProps {
+  service: JapaneseWordwrapService;
 }
 
 const textFieldOptions: TextFieldProps = {
@@ -15,7 +15,9 @@ const textFieldOptions: TextFieldProps = {
   rows: 5,
 };
 
-const JapaneseAnalyzerForm: VFC<JapaneseAnalyzerFormProps> = ({ service }) => {
+const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
+  service,
+}) => {
   const [originalText, setOriginalText] = useState<string>("");
   const [seperatedText, setSeperatedText] = useState<string>("");
 
@@ -64,4 +66,4 @@ const JapaneseAnalyzerForm: VFC<JapaneseAnalyzerFormProps> = ({ service }) => {
   );
 };
 
-export default JapaneseAnalyzerForm;
+export default JapaneseWordwrapForm;

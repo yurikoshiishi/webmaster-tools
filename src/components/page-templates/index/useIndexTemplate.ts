@@ -1,18 +1,18 @@
-import { JapaneseAnalyzerService } from "@/modules/japanese-analyzer/services";
+import { JapaneseWordwrapService } from "@/modules/japanese-wordwrap/services";
 import { useEffect, useState } from "react";
 
 export interface UseIndexTemplate {
   isLoading: boolean;
-  service: JapaneseAnalyzerService | null;
+  service: JapaneseWordwrapService | null;
 }
 
 export function useIndexTemplate(): UseIndexTemplate {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [service, setService] = useState<JapaneseAnalyzerService | null>(null);
+  const [service, setService] = useState<JapaneseWordwrapService | null>(null);
 
   useEffect(() => {
     async function handler() {
-      const service = await JapaneseAnalyzerService.build();
+      const service = await JapaneseWordwrapService.build();
       setService(service);
       setIsLoading(false);
     }

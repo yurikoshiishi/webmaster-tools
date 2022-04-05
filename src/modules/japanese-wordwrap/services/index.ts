@@ -1,13 +1,13 @@
 import { builder, IpadicFeatures, Tokenizer } from "kuromoji";
 
-export class JapaneseAnalyzerService {
+export class JapaneseWordwrapService {
   tokenizer: Tokenizer<IpadicFeatures>;
 
   constructor(tokenizer: Tokenizer<IpadicFeatures>) {
     this.tokenizer = tokenizer;
   }
 
-  static async build(): Promise<JapaneseAnalyzerService> {
+  static async build(): Promise<JapaneseWordwrapService> {
     const tokenizer = await new Promise<Tokenizer<IpadicFeatures>>(
       (resolve, reject) => {
         builder({
@@ -22,7 +22,7 @@ export class JapaneseAnalyzerService {
       }
     );
 
-    const service = new JapaneseAnalyzerService(tokenizer);
+    const service = new JapaneseWordwrapService(tokenizer);
 
     return service;
   }
