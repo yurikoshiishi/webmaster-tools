@@ -19,13 +19,15 @@ const Head: VFC<HeadProps> = ({
   const { pathname } = useRouter();
   const url = `${baseUrl}${pathname}`;
 
+  const titleWithSitename = composeTitle({ siteName, title });
+
   return (
     <NextHead>
-      <title>{title}</title>
-      <meta name="title" content={title} />
+      <title>{titleWithSitename}</title>
+      <meta name="title" content={titleWithSitename} />
       <meta name="description" content={description} />
 
-      <meta property="og:title" content={title} />
+      <meta property="og:title" content={titleWithSitename} />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:url" content={url} />
       <meta property="og:description" content={description} />
@@ -36,7 +38,11 @@ const Head: VFC<HeadProps> = ({
         content="summary_large_image"
         key="twitter:card"
       />
-      <meta name="twitter:title" content={title} key="twitter:title" />
+      <meta
+        name="twitter:title"
+        content={titleWithSitename}
+        key="twitter:title"
+      />
       <meta
         name="twitter:description"
         content={description}
@@ -45,5 +51,23 @@ const Head: VFC<HeadProps> = ({
     </NextHead>
   );
 };
+
+function composeTitle({
+  siteName,
+  title,
+}: {
+  siteName: string;
+  title?: string;
+}) {
+  if (!title) {
+    return siteName;
+  }
+
+  if (title && title.includes(siteName)) {
+    return title;
+  }
+
+  return `${title} | ${siteName}`;
+}
 
 export default Head;

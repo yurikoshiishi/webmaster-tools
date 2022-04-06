@@ -12,13 +12,13 @@ import { SITE_NAME } from "@/constants";
 const links: SidebarProps["links"] = featureModules;
 
 interface LayoutProps {
-  title?: string;
+  headerTitle?: string;
   headProps?: HeadProps;
   isLoading?: boolean;
 }
 
 const Layout: React.FC<LayoutProps> = ({
-  title = SITE_NAME,
+  headerTitle = SITE_NAME,
   children,
   isLoading,
   headProps,
@@ -30,7 +30,7 @@ const Layout: React.FC<LayoutProps> = ({
     <>
       <Head {...headProps} />
       <div>
-        <Header title={title} onClickOpenSidebar={onOpen} />
+        <Header title={headerTitle} onClickOpenSidebar={onOpen} />
         <Flex>
           <Sidebar
             links={links}
