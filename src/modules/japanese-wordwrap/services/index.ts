@@ -1,47 +1,29 @@
-import { builder, IpadicFeatures, Tokenizer } from "kuromoji";
+import { loadDefaultJapaneseParser, Parser } from "budoux";
 
 export class JapaneseWordwrapService {
-  tokenizer: Tokenizer<IpadicFeatures>;
+  parser: Parser;
 
-  constructor(tokenizer: Tokenizer<IpadicFeatures>) {
-    this.tokenizer = tokenizer;
+  constructor(parser: Parser) {
+    this.parser = parser;
   }
 
-  static async build(): Promise<JapaneseWordwrapService> {
-    const tokenizer = await new Promise<Tokenizer<IpadicFeatures>>(
-      (resolve, reject) => {
-        builder({
-          dicPath: "/dict",
-        }).build((err, tokenizer) => {
-          if (err || !tokenizer) {
-            return reject("Failed to load kuromoji tokenizer");
-          } else {
-            return resolve(tokenizer);
-          }
-        });
-      }
-    );
+  analyzeText(text: string, threshold = 1000): string[] {
+    const words = this.parser.parse(text, threshold);
 
-    const service = new JapaneseWordwrapService(tokenizer);
-
-    return service;
+    return words;
   }
 
-  analyzeText(text: string): IpadicFeatures[] {
-    const features = this.tokenizer.tokenize(text);
+  applyWordwrap(
+    text: string,
+    wrapStart = `<span style="display:inline-block;">`,
+    wrapEnd = `</span>`
+  ): string {
+    const words = this.analyzeText(text);
 
-    return features;
-  }
-
-  seperateTextToWords(text: string): string[] {
-    const features = this.analyzeText(text);
-
-    return features.map((feature) => feature.surface_form);
-  }
-
-  applySeperator(text: string, seperator = "#"): string {
-    const words = this.seperateTextToWords(text);
-
-    return words.join(seperator);
+    return words.map((word) => `${wrapStart}${word}${wrapEnd}`).join("");
   }
 }
+
+export const japaneseWordWrapService = new JapaneseWordwrapService(
+  loadDefaultJapaneseParser()
+);

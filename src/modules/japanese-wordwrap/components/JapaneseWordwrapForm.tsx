@@ -39,7 +39,7 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const seperatedText = service.applySeperator(originalText);
+    const seperatedText = service.applyWordwrap(originalText);
     setSeperatedText(seperatedText);
 
     try {

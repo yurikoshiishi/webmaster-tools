@@ -6,11 +6,11 @@ import React, { VFC } from "react";
 interface IndexTemplateProps {}
 
 const IndexTemplate: VFC<IndexTemplateProps> = ({}) => {
-  const { isLoading, service } = useIndexTemplate();
+  const { service } = useIndexTemplate();
 
   return (
-    <Layout isLoading={isLoading}>
-      {service && <JapaneseAnalyzerForm service={service} />}
+    <Layout>
+      <JapaneseAnalyzerForm service={service} />
     </Layout>
   );
 };

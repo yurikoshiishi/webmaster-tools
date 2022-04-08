@@ -1,27 +1,14 @@
-import { JapaneseWordwrapService } from "@/modules/japanese-wordwrap/services";
-import { useEffect, useState } from "react";
+import {
+  japaneseWordWrapService,
+  JapaneseWordwrapService,
+} from "@/modules/japanese-wordwrap/services";
 
 export interface UseIndexTemplate {
-  isLoading: boolean;
-  service: JapaneseWordwrapService | null;
+  service: JapaneseWordwrapService;
 }
 
 export function useIndexTemplate(): UseIndexTemplate {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [service, setService] = useState<JapaneseWordwrapService | null>(null);
-
-  useEffect(() => {
-    async function handler() {
-      const service = await JapaneseWordwrapService.build();
-      setService(service);
-      setIsLoading(false);
-    }
-
-    handler();
-  }, []);
-
   return {
-    isLoading,
-    service,
+    service: japaneseWordWrapService,
   };
 }
