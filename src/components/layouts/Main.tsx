@@ -13,9 +13,10 @@ const Main: React.FC<MainProps> = ({ children }) => {
       }}
       overflowX={"scroll"}
       as="main"
-      maxW="container.lg"
+      maxW="container.xl"
+      height={"100%"}
     >
-      <Box px={4} py={8}>
+      <Box height={"100%"} px={4} py={8}>
         {children}
       </Box>
     </Container>

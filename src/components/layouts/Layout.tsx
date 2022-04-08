@@ -8,6 +8,7 @@ import Main from "@/components/layouts/Main";
 import Header from "@/components/layouts/Header";
 import Head, { HeadProps } from "@/components/layouts/Head";
 import { SITE_NAME } from "@/constants";
+import { HEADER_HEIGHT } from "@/components/layouts/constants";
 
 const links: SidebarProps["links"] = featureModules;
 
@@ -29,18 +30,16 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <>
       <Head {...headProps} />
-      <div>
-        <Header title={headerTitle} onClickOpenSidebar={onOpen} />
-        <Flex>
-          <Sidebar
-            links={links}
-            currentPathname={pathname}
-            onClickCloseSidebar={onClose}
-            isSidebarOpen={isOpen}
-          />
-          <Main>{isLoading ? <Loading /> : children}</Main>
-        </Flex>
-      </div>
+      <Header title={headerTitle} onClickOpenSidebar={onOpen} />
+      <Flex height={`calc(100% - ${HEADER_HEIGHT}px)`}>
+        <Sidebar
+          links={links}
+          currentPathname={pathname}
+          onClickCloseSidebar={onClose}
+          isSidebarOpen={isOpen}
+        />
+        <Main>{isLoading ? <Loading /> : children}</Main>
+      </Flex>
     </>
   );
 };
