@@ -1,6 +1,5 @@
 import * as React from "react";
 import Sidebar, { SidebarProps } from "@/components/layouts/Sidebar";
-import Loading from "@/components/ui/Loading";
 import { featureModules } from "@/modules";
 import { useRouter } from "next/router";
 import { Flex, useDisclosure } from "@chakra-ui/react";
@@ -38,7 +37,7 @@ const Layout: React.FC<LayoutProps> = ({
           onClickCloseSidebar={onClose}
           isSidebarOpen={isOpen}
         />
-        <Main>{isLoading ? <Loading /> : children}</Main>
+        <Main isLoading={isLoading}>{children}</Main>
       </Flex>
     </>
   );
