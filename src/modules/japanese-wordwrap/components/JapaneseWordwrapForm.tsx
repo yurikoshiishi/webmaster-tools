@@ -1,11 +1,12 @@
+import BorderedBox from "@/components/ui/BorderedBox";
 import { useNotification } from "@/hooks/useNotification";
 import { copyToClipboard } from "@/lib/clipboard";
 import { log } from "@/lib/logger";
 import { JapaneseWordwrapService } from "@/modules/japanese-wordwrap/services";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
+  Divider,
   FormControl,
   FormLabel,
   Textarea,
@@ -18,8 +19,9 @@ interface JapaneseWordwrapFormFormProps {
 }
 
 const textareaProps: TextareaProps = {
-  rows: 8,
+  rows: 15,
   resize: "none",
+  variant: "unstyled",
 };
 
 const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
@@ -56,32 +58,36 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
 
   return (
     <form onSubmit={onSubmit}>
-      <Box
+      <BorderedBox
+        height={"500px"}
         gap={2}
         display={"flex"}
-        alignItems={"center"}
-        justifyContent={"space-between"}
+        alignItems={"stretch"}
       >
-        <FormControl>
-          <FormLabel>Original</FormLabel>
-          <Textarea
-            {...textareaProps}
-            placeholder={`ここに文章を入力してください\nPlease enter the text you would like to convert`}
-            value={originalText}
-            onChange={onChangeOriginal}
-          />
-        </FormControl>
-        <ArrowForwardIcon />
-        <FormControl>
-          <FormLabel>Converted</FormLabel>
-          <Textarea
-            {...textareaProps}
-            placeholder={`ここ#に#文章#を#入力#し#て#ください\nPlease# #enter# #the# #text# #you# #would# #like# #to# #convert#`}
-            value={seperatedText}
-            onChange={onChangeSeperated}
-          />
-        </FormControl>
-      </Box>
+        <Box width={"50%"} p={4}>
+          <FormControl>
+            <FormLabel>Original</FormLabel>
+            <Textarea
+              {...textareaProps}
+              placeholder={`ここに文章を入力してください\nPlease enter the text you would like to convert`}
+              value={originalText}
+              onChange={onChangeOriginal}
+            />
+          </FormControl>
+        </Box>
+        <Divider orientation="vertical" />
+        <Box width={"50%"} p={4}>
+          <FormControl>
+            <FormLabel>Converted</FormLabel>
+            <Textarea
+              {...textareaProps}
+              placeholder={`ここ#に#文章#を#入力#し#て#ください\nPlease# #enter# #the# #text# #you# #would# #like# #to# #convert#`}
+              value={seperatedText}
+              onChange={onChangeSeperated}
+            />
+          </FormControl>
+        </Box>
+      </BorderedBox>
       <Box mt={4}>
         <Button type="submit" variant="solid">
           Convert
