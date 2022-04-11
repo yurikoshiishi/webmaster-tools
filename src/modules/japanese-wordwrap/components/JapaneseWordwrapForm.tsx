@@ -14,19 +14,17 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, VFC } from "react";
 
-interface JapaneseWordwrapFormFormProps {
+interface JapaneseWordwrapFormProps {
   service: JapaneseWordwrapService;
 }
 
 const textareaProps: TextareaProps = {
-  rows: 15,
+  rows: 12,
   resize: "none",
   variant: "unstyled",
 };
 
-const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
-  service,
-}) => {
+const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormProps> = ({ service }) => {
   const [originalText, setOriginalText] = useState<string>("");
   const [seperatedText, setSeperatedText] = useState<string>("");
   const { showNotification } = useNotification();
@@ -41,7 +39,10 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const seperatedText = service.applyWordwrap(originalText);
+    const seperatedText = service.applyWordwrap(
+      originalText,
+      service.getOptions()
+    );
     setSeperatedText(seperatedText);
 
     try {
@@ -59,7 +60,7 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormFormProps> = ({
   return (
     <form onSubmit={onSubmit}>
       <BorderedBox
-        height={"500px"}
+        height={"350px"}
         gap={2}
         display={"flex"}
         alignItems={"stretch"}
