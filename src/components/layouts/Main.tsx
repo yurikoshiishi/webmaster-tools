@@ -16,7 +16,7 @@ const Main: React.FC<MainProps> = ({ children }) => {
       maxW="container.xl"
       height={"100%"}
     >
-      <Box height={"100%"} px={4} py={8}>
+      <Box height={"100%"} px={{ base: 0, md: 4 }} py={8}>
         {children}
       </Box>
     </Container>
