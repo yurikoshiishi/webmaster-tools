@@ -4,6 +4,8 @@ export interface UseNotification {
   showNotification: (options?: NotificationOptions) => void;
 }
 
+//TODO: copy to clipboard abstarction
+
 type NotificationOptions = Pick<
   UseToastOptions,
   "title" | "description" | "status" | "id"

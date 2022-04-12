@@ -1,3 +1,4 @@
+import { htmlMinifierModule } from "@/modules/html-minifier/constants";
 import { japaneseWordWrapModule } from "@/modules/japanese-wordwrap/constants";
 
 export type FeatureModule = {
@@ -5,7 +6,10 @@ export type FeatureModule = {
   href: string;
 };
 
-export const featureModules: FeatureModule[] = [japaneseWordWrapModule];
+export const featureModules: FeatureModule[] = [
+  japaneseWordWrapModule,
+  htmlMinifierModule,
+];
 
 export function composeStorageKey(key: string) {
   return `webmaster-tools_${key}`;
