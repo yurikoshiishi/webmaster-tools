@@ -8,7 +8,7 @@ import {
   DrawerContent,
   DrawerOverlay,
   Flex,
-  HStack,
+  VStack,
 } from "@chakra-ui/react";
 import React, { VFC } from "react";
 
@@ -39,7 +39,7 @@ const Sidebar: VFC<SidebarProps> = ({
           justifyContent="space-between"
           height={`calc(100vh - ${HEADER_HEIGHT}px)`}
         >
-          <HStack width={"100%"} p={4} spacing={4} align="flex-start">
+          <VStack width={"100%"} p={4} spacing={2} align="flex-start">
             {links.map((item) => (
               <SidebarLink
                 key={item.href}
@@ -47,7 +47,7 @@ const Sidebar: VFC<SidebarProps> = ({
                 {...item}
               />
             ))}
-          </HStack>
+          </VStack>
           <Divider orientation="vertical" />
         </Flex>
       </Box>
@@ -60,7 +60,7 @@ const Sidebar: VFC<SidebarProps> = ({
           <DrawerOverlay />
           <DrawerContent>
             <DrawerBody>
-              <HStack py={4} spacing={2}>
+              <VStack py={4} spacing={2}>
                 {links.map((item) => (
                   <SidebarLink
                     key={item.href}
@@ -68,7 +68,7 @@ const Sidebar: VFC<SidebarProps> = ({
                     {...item}
                   />
                 ))}
-              </HStack>
+              </VStack>
             </DrawerBody>
           </DrawerContent>
         </Drawer>

@@ -17,10 +17,11 @@ const SidebarLink: VFC<SidebarLinkProps> = ({
     <Link href={href} passHref>
       <Button
         justifyContent={"flex-start"}
-        px={6}
+        px={4}
         isFullWidth
-        isActive={currentPathname === href}
-        variant={"ghost"}
+        fontSize={"sm"}
+        backgroundColor={currentPathname === href ? "messenger.50" : undefined}
+        variant="ghost"
         as="a"
       >
         {name}
