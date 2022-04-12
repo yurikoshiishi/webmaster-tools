@@ -27,6 +27,7 @@ const SidebarLink: VFC<SidebarLinkProps> = ({
         backgroundColor={currentPathname === href ? selectedBgColor : undefined}
         variant={"ghost"}
         as="a"
+        flexShrink={"0"}
       >
         {name}
       </Button>

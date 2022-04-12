@@ -38,6 +38,14 @@ const Sidebar: VFC<SidebarProps> = ({
           left={0}
           justifyContent="space-between"
           height={`calc(100vh - ${HEADER_HEIGHT}px)`}
+          overflowY="scroll"
+          sx={{
+            scrollbarWidth: "none",
+            "-ms-overflow-style": "none",
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          }}
         >
           <VStack width={"100%"} p={4} spacing={2} align="flex-start">
             {links.map((item) => (
