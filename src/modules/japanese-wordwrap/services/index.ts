@@ -1,4 +1,5 @@
 import { ClientStorage } from "@/lib/storage";
+import { composeStorageKey } from "@/modules";
 import { loadDefaultJapaneseParser, Parser } from "budoux";
 
 export const applyWordwrapOptionTypes = ["seperator", "wrapper"] as const;
@@ -10,21 +11,40 @@ export interface ApplyWordwrapOptions {
   wrapper: [string, string];
 }
 
+export interface ApplyWordwrapHistoryItem {
+  text: string;
+  options: ApplyWordwrapOptions;
+}
+
+export type ApplyWordwrapHistory = ApplyWordwrapHistoryItem[];
+
 const defaultSeperator = "#";
 const defaultWrapper: [string, string] = [
   `<span style="display:inline-block;">`,
   `</span>`,
 ];
+const historyMaxLength = 20;
 
+export interface JapaneseWordwrapServiceInit {
+  parser: Parser;
+  optionStorage: ClientStorage<ApplyWordwrapOptions>;
+  historyStorage: ClientStorage<ApplyWordwrapHistory>;
+}
 export class JapaneseWordwrapService {
   private parser: Parser;
-  private storage: ClientStorage<ApplyWordwrapOptions>;
+  private optionStorage: ClientStorage<ApplyWordwrapOptions>;
+  private historyStorage: ClientStorage<ApplyWordwrapHistory>;
   defaultSeperator = defaultSeperator;
   defaultWrapper = defaultWrapper;
 
-  constructor(parser: Parser, storage: ClientStorage<ApplyWordwrapOptions>) {
+  constructor({
+    historyStorage,
+    optionStorage,
+    parser,
+  }: JapaneseWordwrapServiceInit) {
     this.parser = parser;
-    this.storage = storage;
+    this.optionStorage = optionStorage;
+    this.historyStorage = historyStorage;
   }
 
   analyzeText(text: string, threshold = 1000): string[] {
@@ -35,9 +55,21 @@ export class JapaneseWordwrapService {
 
   applyWordwrap(
     text: string,
-    { type, seperator, wrapper }: ApplyWordwrapOptions
+    { type, seperator, wrapper }: ApplyWordwrapOptions,
+    shouldUpdateHistory = true
   ): string {
     const words = this.analyzeText(text);
+
+    if (shouldUpdateHistory) {
+      this.addHistory({
+        options: {
+          seperator,
+          type,
+          wrapper,
+        },
+        text,
+      });
+    }
 
     switch (type) {
       case "seperator":
@@ -54,20 +86,36 @@ export class JapaneseWordwrapService {
     }
   }
 
+  addHistory(item: ApplyWordwrapHistoryItem) {
+    this.historyStorage.update([item, ...this.historyStorage.get()]);
+  }
+
+  getHistory() {
+    return this.historyStorage.get();
+  }
+
   getOptions() {
-    return this.storage.get();
+    return this.optionStorage.get();
   }
 
   updateOptions(options: ApplyWordwrapOptions) {
-    this.storage.update(options);
+    this.optionStorage.update(options);
   }
 }
 
-export const japaneseWordWrapService = new JapaneseWordwrapService(
-  loadDefaultJapaneseParser(),
-  new ClientStorage("japanese-wordwrap-options", {
-    type: "wrapper",
-    wrapper: defaultWrapper,
-    seperator: defaultSeperator,
-  })
-);
+export const japaneseWordWrapService = new JapaneseWordwrapService({
+  parser: loadDefaultJapaneseParser(),
+  optionStorage: new ClientStorage<ApplyWordwrapOptions>({
+    key: composeStorageKey("japanese-wordwrap-options"),
+    defaultValue: {
+      type: "wrapper",
+      wrapper: defaultWrapper,
+      seperator: defaultSeperator,
+    },
+  }),
+  historyStorage: new ClientStorage<ApplyWordwrapHistory>({
+    key: composeStorageKey("japanese-wordwrap-history"),
+    defaultValue: [],
+    beforeUpdate: (history) => history.slice(0, historyMaxLength),
+  }),
+});

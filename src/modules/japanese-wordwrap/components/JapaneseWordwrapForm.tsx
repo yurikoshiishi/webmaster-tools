@@ -12,7 +12,7 @@ import {
   Textarea,
   TextareaProps,
 } from "@chakra-ui/react";
-import React, { useState, VFC } from "react";
+import React, { useEffect, useState, VFC } from "react";
 
 interface JapaneseWordwrapFormProps {
   service: JapaneseWordwrapService;
@@ -28,6 +28,22 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormProps> = ({ service }) => {
   const [originalText, setOriginalText] = useState<string>("");
   const [seperatedText, setSeperatedText] = useState<string>("");
   const { showNotification } = useNotification();
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const history = service.getHistory();
+    if (!history.length) {
+      return;
+    }
+
+    setOriginalText(history[0].text);
+    setSeperatedText(
+      service.applyWordwrap(history[0].text, history[0].options, false)
+    );
+  }, [service]);
 
   const onChangeOriginal = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setOriginalText(e.target.value);

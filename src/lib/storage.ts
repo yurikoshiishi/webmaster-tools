@@ -1,17 +1,26 @@
+export interface ClientStorageInit<T> {
+  key: string;
+  defaultValue: T;
+  beforeUpdate?: (data: T) => T;
+}
+
 export class ClientStorage<T = any> {
   key: string;
   defaultValue: T;
+  beforeUpdate?: (data: T) => void;
 
-  constructor(key: string, defaultValue: T) {
+  constructor({ defaultValue, key, beforeUpdate }: ClientStorageInit<T>) {
     this.key = key;
     this.defaultValue = defaultValue;
+    this.beforeUpdate = beforeUpdate;
   }
 
   update(data: T) {
     if (typeof window === "undefined") {
       return;
     }
-    localStorage.setItem(this.key, JSON.stringify(data));
+    const modifiedData = this.beforeUpdate?.(data) ?? data;
+    localStorage.setItem(this.key, JSON.stringify(modifiedData));
   }
 
   get(): T {

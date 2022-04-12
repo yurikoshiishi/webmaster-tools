@@ -6,3 +6,7 @@ export type FeatureModule = {
 };
 
 export const featureModules: FeatureModule[] = [japaneseWordWrapModule];
+
+export function composeStorageKey(key: string) {
+  return `webmaster-tools_${key}`;
+}
