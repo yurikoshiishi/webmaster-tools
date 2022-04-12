@@ -4,18 +4,34 @@ import { minify as minifyHTMLString, Options } from "html-minifier-terser";
 
 export interface HTMLMinifierServiceInit {
   minifyHTML: typeof minifyHTMLString;
-  optionStorage: ClientStorage<MinifyOptions>;
+  optionStorage: ClientStorage<HTMLMinifyOptions>;
+  historyStorage: ClientStorage<HTMLMinifyHistory>;
 }
 
-export interface MinifyOptions extends Options {}
+export interface HTMLMinifyOptions extends Options {}
+
+export interface HTMLMinifyHistoryItem {
+  originalHTML: string;
+  minifiedHTML: string;
+}
+
+export type HTMLMinifyHistory = HTMLMinifyHistoryItem[];
+
+const historyMaxLength = 1;
 
 export class HTMLMinifierService {
   private minifyHTML: typeof minifyHTMLString;
-  private optionStorage: ClientStorage<MinifyOptions>;
+  private optionStorage: ClientStorage<HTMLMinifyOptions>;
+  private historyStorage: ClientStorage<HTMLMinifyHistory>;
 
-  constructor({ minifyHTML, optionStorage }: HTMLMinifierServiceInit) {
+  constructor({
+    minifyHTML,
+    optionStorage,
+    historyStorage,
+  }: HTMLMinifierServiceInit) {
     this.minifyHTML = minifyHTML;
     this.optionStorage = optionStorage;
+    this.historyStorage = historyStorage;
   }
 
   static async build(): Promise<HTMLMinifierService> {
@@ -25,7 +41,12 @@ export class HTMLMinifierService {
     );
     return new HTMLMinifierService({
       minifyHTML: htmlMinifier.minify,
-      optionStorage: new ClientStorage<MinifyOptions>({
+      historyStorage: new ClientStorage<HTMLMinifyHistory>({
+        key: composeStorageKey("html-minifier-history"),
+        defaultValue: [],
+        beforeUpdate: (history) => history.slice(0, historyMaxLength),
+      }),
+      optionStorage: new ClientStorage<HTMLMinifyOptions>({
         key: composeStorageKey("html-minifier-options"),
         defaultValue: {
           continueOnParseError: false,
@@ -66,15 +87,28 @@ export class HTMLMinifierService {
     });
   }
 
-  async minify(html: string, options: MinifyOptions) {
+  async minify(html: string, options: HTMLMinifyOptions) {
+    const minified = await this.minifyHTML(html, options);
+    this.addHistory({
+      originalHTML: html,
+      minifiedHTML: minified,
+    });
     return await this.minifyHTML(html, options);
+  }
+
+  addHistory(item: HTMLMinifyHistoryItem) {
+    this.historyStorage.update([item, ...this.historyStorage.get()]);
+  }
+
+  getHistory() {
+    return this.historyStorage.get();
   }
 
   getOptions() {
     return this.optionStorage.get();
   }
 
-  updateOptions(options: MinifyOptions) {
+  updateOptions(options: HTMLMinifyOptions) {
     this.optionStorage.update(options);
   }
 }

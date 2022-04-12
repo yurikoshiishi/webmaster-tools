@@ -12,7 +12,7 @@ import {
   Textarea,
   TextareaProps,
 } from "@chakra-ui/react";
-import React, { useState, VFC } from "react";
+import React, { useEffect, useState, VFC } from "react";
 
 interface HTMLMinifierFormProps {
   service: HTMLMinifierService;
@@ -29,6 +29,20 @@ const HTMLMinifierForm: VFC<HTMLMinifierFormProps> = ({ service }) => {
   const [originalText, setOriginalText] = useState<string>("");
   const [convertedText, setConvertedText] = useState<string>("");
   const { showNotification } = useNotification();
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const history = service.getHistory();
+    if (!history.length) {
+      return;
+    }
+
+    setOriginalText(history[0].originalHTML);
+    setConvertedText(history[0].minifiedHTML);
+  }, [service]);
 
   const onChangeOriginal = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setOriginalText(e.target.value);
@@ -72,7 +86,7 @@ const HTMLMinifierForm: VFC<HTMLMinifierFormProps> = ({ service }) => {
               <FormLabel>Original</FormLabel>
               <Textarea
                 {...textareaProps}
-                placeholder={`<div>\n<p>Hello World!</p>\n</div>`}
+                placeholder={`<div>\n\t<p>Hello World!</p>\n</div>`}
                 value={originalText}
                 onChange={onChangeOriginal}
               />
