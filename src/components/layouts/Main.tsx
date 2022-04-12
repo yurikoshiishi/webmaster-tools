@@ -1,12 +1,13 @@
 import Loading from "@/components/ui/Loading";
-import { Box, Container } from "@chakra-ui/react";
+import { Box, Container, Text } from "@chakra-ui/react";
 import React from "react";
 
-interface MainProps {
+export interface MainProps {
+  title?: string;
   isLoading?: boolean;
 }
 
-const Main: React.FC<MainProps> = ({ children, isLoading }) => {
+const Main: React.FC<MainProps> = ({ children, isLoading, title }) => {
   return (
     <Container
       css={{
@@ -25,6 +26,16 @@ const Main: React.FC<MainProps> = ({ children, isLoading }) => {
         px={{ base: 0, md: 4 }}
         py={8}
       >
+        {title && (
+          <Text
+            as="h1"
+            fontSize={{ base: "2xl", md: "3xl" }}
+            fontWeight={600}
+            mb={{ base: 4, md: 6 }}
+          >
+            {title}
+          </Text>
+        )}
         {isLoading ? <Loading /> : children}
       </Box>
     </Container>

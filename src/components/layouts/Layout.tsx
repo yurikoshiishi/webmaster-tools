@@ -37,7 +37,9 @@ const Layout: React.FC<LayoutProps> = ({
           onClickCloseSidebar={onClose}
           isSidebarOpen={isOpen}
         />
-        <Main isLoading={isLoading}>{children}</Main>
+        <Main isLoading={isLoading} title={headProps?.title}>
+          {children}
+        </Main>
       </Flex>
     </>
   );
