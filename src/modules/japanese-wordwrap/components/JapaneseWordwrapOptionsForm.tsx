@@ -81,20 +81,14 @@ const JapaneseWordwrapOptionsForm: VFC<JapaneseWordwrapOptionsFormProps> = ({
           </RadioGroup>
           <Box mt={2} display="flex" gap={4} justifyContent={"flex-end"}>
             {options.type === "seperator" ? (
-              <Input
-                // width={"auto"}
-                value={options.seperator}
-                onChange={onChangeSeperator}
-              />
+              <Input value={options.seperator} onChange={onChangeSeperator} />
             ) : (
               <>
                 <Input
-                  // width={"auto"}
                   value={options.wrapper[0]}
                   onChange={onChangeWrapperStart}
                 />
                 <Input
-                  // width={"auto"}
                   value={options.wrapper[1]}
                   onChange={onChangeWrapperEnd}
                 />
