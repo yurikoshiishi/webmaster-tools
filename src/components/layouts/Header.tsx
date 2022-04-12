@@ -46,7 +46,7 @@ const Header: VFC<HeaderProps> = ({ title, onClickOpenSidebar }) => {
           </Text>
         </HStack>
         <HStack spacing={2}>
-          <Button onClick={toggleColorMode}>
+          <Button variant={"ghost"} onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </Button>
         </HStack>
