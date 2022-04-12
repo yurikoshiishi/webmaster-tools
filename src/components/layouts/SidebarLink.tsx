@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, useColorModeValue } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { VFC } from "react";
 
@@ -13,6 +13,10 @@ const SidebarLink: VFC<SidebarLinkProps> = ({
   href,
   name,
 }) => {
+  const selectedBgColor = useColorModeValue(
+    "messenger.50",
+    "rgba(162, 205, 255, 0.12)"
+  );
   return (
     <Link href={href} passHref>
       <Button
@@ -20,8 +24,8 @@ const SidebarLink: VFC<SidebarLinkProps> = ({
         px={4}
         isFullWidth
         fontSize={"sm"}
-        backgroundColor={currentPathname === href ? "messenger.50" : undefined}
-        variant="ghost"
+        backgroundColor={currentPathname === href ? selectedBgColor : undefined}
+        variant={"ghost"}
         as="a"
       >
         {name}
