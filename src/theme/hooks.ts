@@ -7,3 +7,7 @@ export function useBorderColor() {
 export function useBackgroundColor() {
   return useColorModeValue("gray.50", "gray.900");
 }
+
+export function useSurfaceColor() {
+  return useColorModeValue("white", "gray.800");
+}
