@@ -22,7 +22,6 @@ const textareaProps: TextareaProps = {
   rows: 12,
   resize: "none",
   variant: "unstyled",
-  tabIndex: -1,
 };
 
 const HTMLMinifierForm: VFC<HTMLMinifierFormProps> = ({ service }) => {
