@@ -10,38 +10,39 @@ export interface MainProps {
 
 const Main: React.FC<MainProps> = ({ children, isLoading, title }) => {
   const bgColor = useBackgroundColor();
+
   return (
-    <Container
-      css={{
-        "&::-webkit-scrollbar, scrollbar-width, -ms-overflow-style": {
-          display: "none",
-        },
-      }}
-      overflowX={"scroll"}
-      as="main"
-      maxW="container.xl"
-      height={"100%"}
-      pb={16}
-      backgroundColor={bgColor}
-    >
-      <Box
-        height={isLoading ? "100%" : undefined}
-        px={{ base: 0, md: 4 }}
-        py={8}
+    <Box as="main" width={"100%"} height={"100%"} backgroundColor={bgColor}>
+      <Container
+        css={{
+          "&::-webkit-scrollbar, scrollbar-width, -ms-overflow-style": {
+            display: "none",
+          },
+        }}
+        overflowX={"scroll"}
+        maxW="container.xl"
+        height={"100%"}
+        pb={16}
       >
-        {title && (
-          <Text
-            as="h1"
-            fontSize={{ base: "2xl", md: "3xl" }}
-            fontWeight={600}
-            mb={{ base: 4, md: 6 }}
-          >
-            {title}
-          </Text>
-        )}
-        {isLoading ? <Loading /> : children}
-      </Box>
-    </Container>
+        <Box
+          height={isLoading ? "100%" : undefined}
+          px={{ base: 0, md: 4 }}
+          py={8}
+        >
+          {title && (
+            <Text
+              as="h1"
+              fontSize={{ base: "2xl", md: "3xl" }}
+              fontWeight={600}
+              mb={{ base: 4, md: 6 }}
+            >
+              {title}
+            </Text>
+          )}
+          {isLoading ? <Loading /> : children}
+        </Box>
+      </Container>
+    </Box>
   );
 };
 
