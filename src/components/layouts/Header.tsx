@@ -28,9 +28,9 @@ const Header: VFC<HeaderProps> = ({ title, onClickOpenSidebar }) => {
       backgroundColor={colorMode === "light" ? "white" : "gray.800"}
     >
       <Flex
-        height={"100%"}
+        height="100%"
         alignItems="center"
-        justifyContent={"space-between"}
+        justifyContent="space-between"
         px={4}
       >
         <HStack spacing={4}>
@@ -41,12 +41,12 @@ const Header: VFC<HeaderProps> = ({ title, onClickOpenSidebar }) => {
           >
             <HamburgerIcon />
           </Button>
-          <Text fontSize={"lg"} fontWeight={600}>
+          <Text fontSize="lg" fontWeight={600}>
             {title}
           </Text>
         </HStack>
         <HStack spacing={2}>
-          <Button variant={"ghost"} onClick={toggleColorMode}>
+          <Button variant="ghost" onClick={toggleColorMode}>
             {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           </Button>
         </HStack>

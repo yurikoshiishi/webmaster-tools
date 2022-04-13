@@ -11,7 +11,7 @@ const BorderedBox: VFC<BorderedBoxProps> = ({ children, ...props }) => {
     <Box
       {...props}
       borderWidth={1}
-      borderRadius={"2xl"}
+      borderRadius="2xl"
       borderColor={borderColor}
       backgroundColor={surfaceColor}
     >

@@ -76,12 +76,12 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormProps> = ({ service }) => {
   return (
     <form onSubmit={onSubmit}>
       <BorderedBox
-        height={"350px"}
+        height="350px"
         gap={2}
-        display={"flex"}
-        alignItems={"stretch"}
+        display="flex"
+        alignItems="stretch"
       >
-        <Box width={"50%"} p={4}>
+        <Box width="50%" p={4}>
           <FormControl>
             <FormLabel>Original</FormLabel>
             <Textarea
@@ -93,7 +93,7 @@ const JapaneseWordwrapForm: VFC<JapaneseWordwrapFormProps> = ({ service }) => {
           </FormControl>
         </Box>
         <Divider orientation="vertical" />
-        <Box width={"50%"} p={4}>
+        <Box width="50%" p={4}>
           <FormControl>
             <FormLabel>Converted</FormLabel>
             <Textarea

@@ -75,13 +75,8 @@ const HTMLMinifierForm: VFC<HTMLMinifierFormProps> = ({ service }) => {
   return (
     <>
       <form onSubmit={onSubmit}>
-        <BorderedBox
-          height={"350px"}
-          gap={2}
-          display={"flex"}
-          alignItems={"stretch"}
-        >
-          <Box width={"50%"} p={4}>
+        <BorderedBox height="350px" gap={2} display="flex" alignItems="stretch">
+          <Box width="50%" p={4}>
             <FormControl>
               <FormLabel>Original</FormLabel>
               <Textarea
@@ -93,12 +88,12 @@ const HTMLMinifierForm: VFC<HTMLMinifierFormProps> = ({ service }) => {
             </FormControl>
           </Box>
           <Divider orientation="vertical" />
-          <Box width={"50%"} p={4}>
+          <Box width="50%" p={4}>
             <FormControl>
               <FormLabel>Converted</FormLabel>
               <Textarea
                 {...textareaProps}
-                placeholder={`<div><p>Hello World!</p></div>`}
+                placeholder="<div><p>Hello World!</p></div>"
                 value={convertedText}
                 onChange={onChangeSeperated}
               />

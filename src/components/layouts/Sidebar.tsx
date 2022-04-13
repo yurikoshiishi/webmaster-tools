@@ -29,7 +29,7 @@ const Sidebar: VFC<SidebarProps> = ({
   onClickCloseSidebar,
 }) => {
   return (
-    <Box as={"nav"}>
+    <Box as="nav">
       <Box display={{ base: "none", lg: "block" }}>
         <Flex
           position="sticky"
@@ -47,7 +47,7 @@ const Sidebar: VFC<SidebarProps> = ({
             },
           }}
         >
-          <VStack width={"100%"} p={4} spacing={2} align="flex-start">
+          <VStack width="100%" p={4} spacing={2} align="flex-start">
             {links.map((item) => (
               <SidebarLink
                 key={item.href}

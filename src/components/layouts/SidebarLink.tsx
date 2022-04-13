@@ -20,14 +20,14 @@ const SidebarLink: VFC<SidebarLinkProps> = ({
   return (
     <Link href={href} passHref>
       <Button
-        justifyContent={"flex-start"}
+        justifyContent="flex-start"
         px={4}
         isFullWidth
-        fontSize={"sm"}
+        fontSize="sm"
         backgroundColor={currentPathname === href ? selectedBgColor : undefined}
-        variant={"ghost"}
+        variant="ghost"
         as="a"
-        flexShrink={"0"}
+        flexShrink="0"
       >
         {name}
       </Button>
