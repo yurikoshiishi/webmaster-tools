@@ -12,16 +12,21 @@ const Main: React.FC<MainProps> = ({ children, isLoading, title }) => {
   const bgColor = useBackgroundColor();
 
   return (
-    <Box as="main" width="100%" height="100%" backgroundColor={bgColor}>
+    <Box
+      as="main"
+      width="100%"
+      height="100%"
+      overflow="auto"
+      backgroundColor={bgColor}
+    >
       <Container
         css={{
           "&::-webkit-scrollbar, scrollbar-width, -ms-overflow-style": {
             display: "none",
           },
         }}
-        overflowX="scroll"
         maxW="container.xl"
-        height="100%"
+        height={isLoading ? "100%" : undefined}
         pb={16}
       >
         <Box
