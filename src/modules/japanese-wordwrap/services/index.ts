@@ -9,6 +9,7 @@ export interface ApplyWordwrapOptions {
   type: ApplyWordwrapOptionType;
   seperator: string;
   wrapper: [string, string];
+  threshold: number;
 }
 
 export interface ApplyWordwrapHistoryItem {
@@ -23,6 +24,9 @@ const defaultWrapper: [string, string] = [
   `<span style="display:inline-block;">`,
   `</span>`,
 ];
+const defaultThreshold = 1000;
+const minThreshold = 10;
+const maxThreshold = 2000;
 const historyMaxLength = 20;
 
 export interface JapaneseWordwrapServiceInit {
@@ -36,6 +40,8 @@ export class JapaneseWordwrapService {
   private historyStorage: ClientStorage<ApplyWordwrapHistory>;
   defaultSeperator = defaultSeperator;
   defaultWrapper = defaultWrapper;
+  minThreshold = minThreshold;
+  maxThreshold = maxThreshold;
 
   constructor({
     historyStorage,
@@ -55,28 +61,30 @@ export class JapaneseWordwrapService {
 
   applyWordwrap(
     text: string,
-    { type, seperator, wrapper }: ApplyWordwrapOptions,
+    options: ApplyWordwrapOptions,
     shouldUpdateHistory = true
   ): string {
-    const words = this.analyzeText(text);
+    const words = this.analyzeText(text, options.threshold);
 
     if (shouldUpdateHistory) {
       this.addHistory({
-        options: {
-          seperator,
-          type,
-          wrapper,
-        },
+        options,
         text,
       });
     }
 
-    switch (type) {
+    switch (options.type) {
       case "seperator":
-        return seperator ? words.join(seperator) : words.join(defaultSeperator);
+        return options.seperator
+          ? words.join(options.seperator)
+          : words.join(this.defaultSeperator);
       case "wrapper":
-        return wrapper
-          ? words.map((word) => `${wrapper[0]}${word}${wrapper[1]}`).join("")
+        return options.wrapper
+          ? words
+              .map(
+                (word) => `${options.wrapper[0]}${word}${options.wrapper[1]}`
+              )
+              .join("")
           : words
               .map(
                 (word) =>
@@ -101,6 +109,10 @@ export class JapaneseWordwrapService {
   updateOptions(options: ApplyWordwrapOptions) {
     this.optionStorage.update(options);
   }
+
+  getThresholdInRange(threshold: number) {
+    return Math.max(Math.min(maxThreshold, threshold), minThreshold);
+  }
 }
 
 export const japaneseWordWrapService = new JapaneseWordwrapService({
@@ -111,6 +123,7 @@ export const japaneseWordWrapService = new JapaneseWordwrapService({
       type: "wrapper",
       wrapper: defaultWrapper,
       seperator: defaultSeperator,
+      threshold: defaultThreshold,
     },
   }),
   historyStorage: new ClientStorage<ApplyWordwrapHistory>({

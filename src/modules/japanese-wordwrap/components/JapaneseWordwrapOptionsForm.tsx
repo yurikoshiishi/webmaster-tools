@@ -8,13 +8,19 @@ import {
 import {
   Box,
   Divider,
+  Flex,
   FormControl,
   FormLabel,
   Input,
   Radio,
   RadioGroup,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
   Stack,
   Text,
+  UseSliderProps,
 } from "@chakra-ui/react";
 import React, { useState, VFC } from "react";
 
@@ -61,6 +67,14 @@ const JapaneseWordwrapOptionsForm: VFC<JapaneseWordwrapOptionsFormProps> = ({
     setOptions(service.getOptions());
   };
 
+  const onChangeThreshold: UseSliderProps["onChange"] = (value) => {
+    service.updateOptions({
+      ...options,
+      threshold: value,
+    });
+    setOptions(service.getOptions());
+  };
+
   return (
     <BorderedBox>
       <Box p={4}>
@@ -95,6 +109,28 @@ const JapaneseWordwrapOptionsForm: VFC<JapaneseWordwrapOptionsFormProps> = ({
               </>
             )}
           </Box>
+        </FormControl>
+      </Box>
+      <Divider />
+      <Box p={4}>
+        <FormControl>
+          <Flex justifyContent="space-between" alignItems="start" gap={4}>
+            <FormLabel>Threshold </FormLabel>
+            <Text>{options.threshold}</Text>
+          </Flex>
+          <Slider
+            aria-label="threshold"
+            step={10}
+            value={options.threshold}
+            min={service.minThreshold}
+            max={service.maxThreshold}
+            onChange={onChangeThreshold}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
         </FormControl>
       </Box>
     </BorderedBox>
