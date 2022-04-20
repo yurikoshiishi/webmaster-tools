@@ -1,3 +1,4 @@
+import { htmlFormatterModule } from "@/modules/html-formatter/constants";
 import { htmlMinifierModule } from "@/modules/html-minifier/constants";
 import { japaneseWordWrapModule } from "@/modules/japanese-wordwrap/constants";
 
@@ -15,6 +16,7 @@ export interface Attribution {
 export const featureModules: FeatureModule[] = [
   japaneseWordWrapModule,
   htmlMinifierModule,
+  htmlFormatterModule,
 ];
 
 export function composeStorageKey(key: string) {
