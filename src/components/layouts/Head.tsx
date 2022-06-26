@@ -1,7 +1,7 @@
-import React, { VFC } from "react";
+import { BASE_URL, DEFAULT_DESCRIPTION, SITE_NAME } from "@/constants";
 import NextHead from "next/head";
 import { useRouter } from "next/router";
-import { DEFAULT_DESCRIPTION, SITE_NAME } from "@/constants";
+import { VFC } from "react";
 
 export interface HeadProps {
   title?: string;
@@ -14,7 +14,7 @@ const Head: VFC<HeadProps> = ({
   description = DEFAULT_DESCRIPTION,
   siteName = SITE_NAME,
   title = SITE_NAME,
-  baseUrl,
+  baseUrl = BASE_URL,
 }) => {
   const { pathname } = useRouter();
   const url = `${baseUrl}${pathname}`;
