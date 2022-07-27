@@ -64,12 +64,13 @@ export class JapaneseWordwrapService {
     options: ApplyWordwrapOptions,
     shouldUpdateHistory = true
   ): string {
-    const words = this.analyzeText(text, options.threshold);
+    const trimmedText = text.trim();
+    const words = this.analyzeText(trimmedText, options.threshold);
 
     if (shouldUpdateHistory) {
       this.addHistory({
         options,
-        text,
+        text: trimmedText,
       });
     }
 
